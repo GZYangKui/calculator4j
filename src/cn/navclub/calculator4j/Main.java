@@ -1,18 +1,15 @@
 package cn.navclub.calculator4j;
 
-import cn.navclub.calculator4j.config.TokenKind;
-import cn.navclub.calculator4j.model.Token;
+import cn.navclub.calculator4j.config.TokenProvider;
 
 public class Main {
     public static void main(String[] args) {
-        String expr = "2+4+6*8";
-        TokenProvider provider = TokenProvider.newProvider(expr);
-        while (true) {
-            Token token = provider.token();
-            if (token.getKind() == TokenKind.EOF){
-                break;
-            }
-            System.out.println(token.getValue());
-        }
+        var expr = "2+4+6*(6+4)";
+        var provider = TokenProvider.newProvider(expr);
+        var astExpr = new ASTExpr(provider);
+        var root = astExpr.astNode();
+        var executor = new ASTExecutor(root);
+        var rs = executor.execute();
+        System.out.printf("计算结果:%.2f\n",rs);
     }
 }

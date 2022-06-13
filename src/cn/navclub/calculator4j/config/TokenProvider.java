@@ -1,10 +1,9 @@
-package cn.navclub.calculator4j;
+package cn.navclub.calculator4j.config;
 
-import cn.navclub.calculator4j.config.ParserException;
-import cn.navclub.calculator4j.config.TokenKind;
 import cn.navclub.calculator4j.model.Token;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 public class TokenProvider {
     private final static char C_EOF = 0xff;
@@ -22,15 +21,17 @@ public class TokenProvider {
 
     private int pos;
     private char cc;
+    private Token present;
 
     private TokenProvider(String expr) {
         this.pos = 0;
         this.cc = '\0';
+        this.present = null;
         this.array = expr.toCharArray();
     }
 
 
-    public Token token() throws ParserException {
+    public Token nextToken() {
         if (cc == '\0') {
             cc = nextChar();
         }
@@ -52,13 +53,35 @@ public class TokenProvider {
             token = new Token(TokenKind.NA);
         }
         if (token.getKind() == TokenKind.NA) {
-            throw new ParserException(String.format("Illegal character '%c'", cc));
+            throw new ParserException(String.format("Illegal character '0x%x'", (short) cc));
         }
         //非数字类型获取下一个字符
-        if (token.getKind()!=TokenKind.NUM){
+        if (token.getKind() != TokenKind.NUM) {
             cc = nextChar();
         }
-        return token;
+        return (this.present = token);
+    }
+
+    public void expect(Token token, TokenKind kind) {
+        if (token == null) {
+            token = this.present;
+        }
+        if (token.getKind() == kind) {
+            return;
+        }
+        throw new ParserException(String.format("Expect character '%c'", kind.value));
+    }
+
+    /**
+     * 运算符首符集
+     */
+    public boolean operatorPrefix(TokenKind kind) {
+        for (int i = 0; i < NA_NUM.length - 2; i++) {
+            if (kind == NA_NUM[i]) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isNum(char c) {
@@ -85,6 +108,9 @@ public class TokenProvider {
         return c;
     }
 
+    public Token getPresent() {
+        return present;
+    }
 
     public static TokenProvider newProvider(String expr) {
         return new TokenProvider(expr);

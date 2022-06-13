@@ -3,21 +3,32 @@ package cn.navclub.calculator4j.model;
 import cn.navclub.calculator4j.config.TokenKind;
 
 public class ASTNode {
-    private Double value;
+    private char[] value;
     private TokenKind kind;
-    private final ASTNode[] kinds;
+    private ASTNode next;
+    private ASTNode parent;
+    private ASTNode left;
+    private ASTNode right;
 
-    public ASTNode(TokenKind kind, Double value) {
-        this.kind = kind;
-        this.value = value;
-        this.kinds = new ASTNode[2];
+    public ASTNode(TokenKind kind, char[] value) {
+        this(kind, value, null);
     }
 
-    public Double getValue() {
+    public ASTNode(TokenKind kind, char[] value, ASTNode parent) {
+        this.kind = kind;
+        this.value = value;
+        this.parent = parent;
+    }
+
+    public char[] getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    public Double toDValue() {
+        return Double.parseDouble(new String(this.getValue()));
+    }
+
+    public void setValue(char[] value) {
         this.value = value;
     }
 
@@ -29,7 +40,35 @@ public class ASTNode {
         this.kind = kind;
     }
 
-    public ASTNode[] getKinds() {
-        return kinds;
+    public ASTNode getLeft() {
+        return left;
+    }
+
+    public void setLeft(ASTNode left) {
+        this.left = left;
+    }
+
+    public ASTNode getRight() {
+        return right;
+    }
+
+    public void setRight(ASTNode right) {
+        this.right = right;
+    }
+
+    public ASTNode getNext() {
+        return next;
+    }
+
+    public ASTNode getParent() {
+        return parent;
+    }
+
+    public void setParent(ASTNode parent) {
+        this.parent = parent;
+    }
+
+    public void setNext(ASTNode next) {
+        this.next = next;
     }
 }
