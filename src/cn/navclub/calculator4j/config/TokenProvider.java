@@ -13,6 +13,7 @@ public class TokenProvider {
             TokenKind.ADD,
             TokenKind.MUL,
             TokenKind.DIV,
+            TokenKind.SUB,
             TokenKind.LBRACE,
             TokenKind.RBRACE
     };
@@ -111,6 +112,7 @@ public class TokenProvider {
     public Token getPresent() {
         return present;
     }
+
 
     public static TokenProvider newProvider(String expr) {
         return new TokenProvider(expr);

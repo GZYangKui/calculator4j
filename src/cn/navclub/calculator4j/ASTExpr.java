@@ -22,11 +22,13 @@ public class ASTExpr {
         ASTNode next = root;
         var loop = root != null;
         while (loop) {
+            var temp = this.provider.getPresent();
+            this.provider.nextToken();
             ASTNode node = this.Add();
             next.setNext(node);
             loop = (node != null);
             if (loop) {
-                node.setParent(next);
+                node.setOperator(temp.getKind());
             }
             next = node;
         }
@@ -46,22 +48,20 @@ public class ASTExpr {
             this.provider.nextToken();
             temp.setRight(Mul());
             astNode = temp;
-            this.provider.nextToken();
         }
-
         return astNode;
     }
 
 
-    //Mul —> Pri | Mul * Pri | Mul / Pri
+    //Mul —> Pri | Pri * Mul| Pri / Mul
     private ASTNode Mul() {
         ASTNode astNode = Pri();
-        var token = this.provider.getPresent();
-        if (token.getKind() == TokenKind.MUL || token.getKind() == TokenKind.DIV) {
-            var temp = new ASTNode(token.getKind(), null);
+        var kind = this.provider.getPresent().getKind();
+        if (kind == TokenKind.MUL || kind == TokenKind.DIV) {
+            var temp = new ASTNode(kind, null);
             this.provider.nextToken();
-            temp.setLeft(Mul());
-            temp.setRight(astNode);
+            temp.setLeft(astNode);
+            temp.setRight(Mul());
             astNode = temp;
         }
         return astNode;
@@ -77,6 +77,7 @@ public class ASTExpr {
         } else if (token.getKind() == TokenKind.LBRACE) {
             this.provider.nextToken();
             astNode = Add();
+            this.provider.nextToken();
         } else {
             astNode = null;
         }

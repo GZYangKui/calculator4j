@@ -7,7 +7,7 @@ public enum TokenKind {
     ADD('+'),
     SUB('-'),
     MUL('*'),
-    DIV('-'),
+    DIV('/'),
     LBRACE('('),
     RBRACE(')');
 

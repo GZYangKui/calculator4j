@@ -3,6 +3,9 @@ package cn.navclub.calculator4j;
 import cn.navclub.calculator4j.config.TokenKind;
 import cn.navclub.calculator4j.model.ASTNode;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class ASTExecutor {
     private final ASTNode root;
 
@@ -11,11 +14,11 @@ public class ASTExecutor {
     }
 
     public double execute() {
-        ASTNode next = this.root;
-        double value = 0;
+        var value = this.binTreeTrav(root);
+        var next = root.getNext();
         while (next != null) {
-            value = this.binTreeTrav(next);
-            System.out.println(value);
+            var temp = this.binTreeTrav(next);
+            value = this.calculate(next.getOperator(), value, temp);
             next = next.getNext();
         }
         return value;
@@ -31,16 +34,14 @@ public class ASTExecutor {
         var right = node.getRight();
         final double a;
         final double b;
-        if (left != null && left.getKind() != TokenKind.NUM) {
+        if (left.getKind() != TokenKind.NUM) {
             a = binTreeTrav(left);
         } else {
-            assert left != null;
             a = left.toDValue();
         }
-        if (right != null && right.getKind() != TokenKind.NUM) {
+        if (right.getKind() != TokenKind.NUM) {
             b = binTreeTrav(right);
         } else {
-            assert right != null;
             b = right.toDValue();
         }
         return calculate(kind, a, b);
@@ -48,14 +49,17 @@ public class ASTExecutor {
 
 
     private double calculate(TokenKind kind, double a, double b) {
+        var aa = new BigDecimal(Double.toString(a));
+        var bb = new BigDecimal(Double.toString(b));
+
         if (kind == TokenKind.ADD) {
-            return a + b;
+            return aa.add(bb).doubleValue();
         } else if (kind == TokenKind.SUB) {
-            return a - b;
+            return aa.subtract(bb).doubleValue();
         } else if (kind == TokenKind.MUL) {
-            return a * b;
+            return aa.multiply(bb).doubleValue();
         } else {
-            return a / b;
+            return aa.divide(bb, RoundingMode.CEILING).doubleValue();
         }
     }
 }
