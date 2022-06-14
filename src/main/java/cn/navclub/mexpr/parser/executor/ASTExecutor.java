@@ -7,17 +7,12 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class ASTExecutor {
-    private final ASTNode root;
 
-    public ASTExecutor(ASTNode root) {
-        this.root = root;
-    }
-
-    public double execute() {
-        var value = this.binTreeTrav(root);
+    public double execute(ASTNode root) {
+        var value = this.binTraversing(root);
         var next = root.getNext();
         while (next != null) {
-            var temp = this.binTreeTrav(next);
+            var temp = this.binTraversing(next);
             value = this.calculate(next.getOperator(), value, temp);
             next = next.getNext();
         }
@@ -26,21 +21,24 @@ public class ASTExecutor {
 
 
     /**
-     * 二叉树遍历
+     * 遍历二叉树并计算该二叉树对应的值
      */
-    private double binTreeTrav(ASTNode node) {
+    private double binTraversing(ASTNode node) {
+        if (node.getKind() == TokenKind.NUM) {
+            return node.toDValue();
+        }
         var kind = node.getKind();
         var left = node.getLeft();
         var right = node.getRight();
         final double a;
         final double b;
         if (left.getKind() != TokenKind.NUM) {
-            a = binTreeTrav(left);
+            a = binTraversing(left);
         } else {
             a = left.toDValue();
         }
         if (right.getKind() != TokenKind.NUM) {
-            b = binTreeTrav(right);
+            b = binTraversing(right);
         } else {
             b = right.toDValue();
         }

@@ -1,7 +1,8 @@
-package cn.navclub.mexpr.parser.expr;
+package cn.navclub.mexpr.parser;
 
 import cn.navclub.mexpr.parser.config.TokenKind;
 import cn.navclub.mexpr.parser.config.TokenProvider;
+import cn.navclub.mexpr.parser.executor.ASTExecutor;
 import cn.navclub.mexpr.parser.model.ASTNode;
 
 /**
@@ -9,11 +10,26 @@ import cn.navclub.mexpr.parser.model.ASTNode;
  *
  * @author GZYangKui
  */
-public class ASTExpr {
+public class ASTParser {
+    private final ASTExecutor executor;
     private final TokenProvider provider;
 
-    public ASTExpr(TokenProvider provider) {
+    public ASTParser(TokenProvider provider) {
         this.provider = provider;
+        this.executor = new ASTExecutor();
+    }
+
+    public ASTParser(String expr) {
+        this(TokenProvider.newProvider(expr));
+    }
+
+    /**
+     *
+     *  执行AST节点
+     *
+     */
+    public double execute() {
+        return this.executor.execute(this.astNode());
     }
 
     public ASTNode astNode() {
