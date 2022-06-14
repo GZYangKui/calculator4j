@@ -19,12 +19,12 @@ public class ASTExpr {
     public ASTNode astNode() {
         this.provider.nextToken();
         var root = this.Add();
-        ASTNode next = root;
+        var next = root;
         var loop = root != null;
         while (loop) {
             var temp = this.provider.getPresent();
             this.provider.nextToken();
-            ASTNode node = this.Add();
+            var node = this.Add();
             next.setNext(node);
             loop = (node != null);
             if (loop) {
