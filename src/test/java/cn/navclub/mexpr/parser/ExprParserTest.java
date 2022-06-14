@@ -1,4 +1,5 @@
-import cn.navclub.mexpr.parser.ASTParser;
+package cn.navclub.mexpr.parser;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
