@@ -1,8 +1,8 @@
-package cn.navclub.calculator4j;
+package cn.navclub.mexpr.parser;
 
-import cn.navclub.calculator4j.config.TokenKind;
-import cn.navclub.calculator4j.config.TokenProvider;
-import cn.navclub.calculator4j.model.ASTNode;
+import cn.navclub.mexpr.parser.config.TokenKind;
+import cn.navclub.mexpr.parser.config.TokenProvider;
+import cn.navclub.mexpr.parser.model.ASTNode;
 
 /**
  * 递归下降分析实现简单四则运算

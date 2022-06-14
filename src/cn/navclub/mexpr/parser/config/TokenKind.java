@@ -1,4 +1,4 @@
-package cn.navclub.calculator4j.config;
+package cn.navclub.mexpr.parser.config;
 
 public enum TokenKind {
     NA(' '),

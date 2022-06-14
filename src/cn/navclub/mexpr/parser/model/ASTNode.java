@@ -1,6 +1,6 @@
-package cn.navclub.calculator4j.model;
+package cn.navclub.mexpr.parser.model;
 
-import cn.navclub.calculator4j.config.TokenKind;
+import cn.navclub.mexpr.parser.config.TokenKind;
 
 public class ASTNode {
     private ASTNode next;

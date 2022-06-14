@@ -1,6 +1,6 @@
-package cn.navclub.calculator4j;
+package cn.navclub.mexpr.parser;
 
-import cn.navclub.calculator4j.config.TokenProvider;
+import cn.navclub.mexpr.parser.config.TokenProvider;
 
 public class Main {
     public static void main(String[] args) {

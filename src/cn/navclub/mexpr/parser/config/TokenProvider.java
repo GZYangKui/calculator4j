@@ -1,9 +1,8 @@
-package cn.navclub.calculator4j.config;
+package cn.navclub.mexpr.parser.config;
 
-import cn.navclub.calculator4j.model.Token;
+import cn.navclub.mexpr.parser.model.Token;
 
 import java.util.Arrays;
-import java.util.Collection;
 
 public class TokenProvider {
     private final static char C_EOF = 0xff;

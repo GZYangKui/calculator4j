@@ -1,7 +1,7 @@
-package cn.navclub.calculator4j;
+package cn.navclub.mexpr.parser;
 
-import cn.navclub.calculator4j.config.TokenKind;
-import cn.navclub.calculator4j.model.ASTNode;
+import cn.navclub.mexpr.parser.config.TokenKind;
+import cn.navclub.mexpr.parser.model.ASTNode;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
