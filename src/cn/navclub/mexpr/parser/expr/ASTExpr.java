@@ -1,4 +1,4 @@
-package cn.navclub.mexpr.parser;
+package cn.navclub.mexpr.parser.expr;
 
 import cn.navclub.mexpr.parser.config.TokenKind;
 import cn.navclub.mexpr.parser.config.TokenProvider;
