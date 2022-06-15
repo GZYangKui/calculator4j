@@ -93,7 +93,7 @@ public class ASTParser {
         } else if (token.getKind() == TokenKind.LBRACE) {
             this.provider.nextToken();
             astNode = Add();
-            this.provider.nextToken();
+            this.provider.expect(null,TokenKind.RBRACE);
         } else {
             astNode = null;
         }

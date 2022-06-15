@@ -67,6 +67,7 @@ public class TokenProvider {
             token = this.present;
         }
         if (token.getKind() == kind) {
+            this.nextToken();
             return;
         }
         throw new ParserException(String.format("Expect character '%c'", kind.value));
