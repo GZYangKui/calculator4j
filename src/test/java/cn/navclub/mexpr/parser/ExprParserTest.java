@@ -39,4 +39,11 @@ public class ExprParserTest {
         var rs = new ASTParser(expr).execute();
         Assertions.assertEquals(rs, -10);
     }
+
+    @Test
+    public void testNest(){
+        var expr = "3+2-5*(((1+1)*6*(6+3))*10)+5";
+        var rs = new ASTParser(expr).execute();
+        Assertions.assertEquals(rs,-5400);
+    }
 }

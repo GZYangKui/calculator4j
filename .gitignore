@@ -1,3 +1,5 @@
 .idea
 target
 calculator4j.iml
+*.iml
+dependency-reduced-pom.xml
